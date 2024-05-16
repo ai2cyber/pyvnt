@@ -1,5 +1,5 @@
 from dataclasses import field
-from typing import Any, Callable, Dict, List, Optional, TypeVar, overload
+from typing import Any, Callable, Dict, List, Optional, TypeVar, overload, Union
 
 from pyvnt.constants import TRANSFORMER_METADATA, VALIDATOR_METADATA
 from pyvnt.transformer import Transformer
@@ -8,59 +8,16 @@ from pyvnt.validator import Validator
 
 _T = TypeVar("_T")
 
-
-@overload
 def descriptor(
-    *,
-    default: _T,
+    default: Union[_T,Optional[_T]] = None,
+    default_factory: Union[Optional[Callable[[], _T]], Callable[[], _T]] = None,
     init: bool = True,
     repr: bool = True,
     hash: Optional[bool] = None,
     compare: bool = True,
-    validations: List[Validator[_T]] = [],
-    transformations: List[Transformer[_T, Any]] = []
-) -> _T:
-    ...
-
-
-@overload
-def descriptor(
-    *,
-    default_factory: Callable[[], _T],
-    init: bool = True,
-    repr: bool = True,
-    hash: Optional[bool] = None,
-    compare: bool = True,
-    validations: List[Validator[_T]] = [],
-    transformations: List[Transformer[_T, Any]] = []
-) -> _T:
-    ...
-
-
-@overload
-def descriptor(
-    *,
-    init: bool = True,
-    repr: bool = True,
-    hash: Optional[bool] = None,
-    compare: bool = True,
-    validations: List[Validator[Any]] = [],
-    transformations: List[Transformer[Any, Any]] = []
-) -> Any:
-    ...
-
-
-def descriptor(
-    *,
-    default: Optional[_T] = None,
-    default_factory: Optional[Callable[[], _T]] = None,
-    init: bool = True,
-    repr: bool = True,
-    hash: Optional[bool] = None,
-    compare: bool = True,
-    validations: List[Validator[_T]] = [],
-    transformations: List[Transformer[_T, Any]] = []
-) -> _T:
+    validations: Union[List[Validator[Union[_T,Any]]], List[Validator[_T]]] = [],
+    transformations: List[Transformer[Union[_T,Any], Any]] = []
+) -> Union[_T, Any]:
     args: Dict[str, Any] = {
         "init": init,
         "repr": repr,

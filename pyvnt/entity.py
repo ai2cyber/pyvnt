@@ -33,15 +33,8 @@ class Entity(EntityInstance):
     def __post_init__(self) -> None:
         pass
 
-    @overload
-    def validate(self, throw: Literal[True] = True) -> Self:
-        ...
 
-    @overload
-    def validate(self, throw: Literal[False] = False) -> Tuple[bool, Optional[ValidationException]]:
-        ...
-
-    def validate(self, throw: bool = True) -> Union[Self, Tuple[bool, Optional[ValidationException]]]:
+    def validate(self, throw: Union[bool, Literal[True]] = True) -> Union[Self, Tuple[bool, Optional[ValidationException]]]:
         property_errors: Dict[str, List[ValidationException]] = {}
 
         for field in descriptors(self):
