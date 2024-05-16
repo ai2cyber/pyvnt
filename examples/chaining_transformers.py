@@ -20,8 +20,10 @@ def join_list_transformer(separator: str = ";") -> Transformer[List[str], str]:
 list_uuid_transformer: Transformer[List[UUID], List[str]] = list_transformer(uuid_transformer())
 list_str_transformer: Transformer[List[str], str] = join_list_transformer()
 chained_transformer: Transformer[List[UUID], str] = list_uuid_transformer.chain(list_str_transformer)
+
 # Notice the types of each transformer. The static analysis recognizes that the chained transformer is of type
-# Transformer[List[UUID], str]. Internally it follows the path:
+# Transformer[List[UUID], str]. 
+# Internally it follows the path:
 # List[UUID] -> list_uuid_transformer -> List[str] -> join_list_transformer -> str
 
 

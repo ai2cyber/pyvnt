@@ -10,13 +10,13 @@ class Sample(Entity):
     property_one: List[UUID] = descriptor(transformations=[list_transformer(uuid_transformer())])
 
 
-class InheritedSample(Entity):
+class InheritedSample(Sample):
     property_two: int = descriptor()
 
 
 uuids = [uuid4(), uuid4(), uuid4()]
 sample = Sample(uuids)
-inherited_sample = InheritedSample(10)
+inherited_sample = InheritedSample(sample.property_one, 10)
 serialized_inherited_sample = inherited_sample.serialize()
 
 assert inherited_sample == Sample.deserialize(serialized_inherited_sample)
