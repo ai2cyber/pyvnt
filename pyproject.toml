@@ -1,0 +1,27 @@
+[tool.ruff]
+line-length = 120
+
+[tool.black]
+line-length = 120
+
+[tool.poetry]
+name = "pyvnt"
+version = "1.0.0"
+include = ["pyvnt/py.typed"]
+description = "A class validation and transformation library, to ensure secure data structures in Python."
+authors = ["AI2CYBER <github@ai2cyber.com>"]
+readme = "README.md"
+keywords = ["validation", "transformation", "serialization", "deserialization"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typing-extensions = "4.10.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.286"
+black = "^23.7.0"
+pyright = "^1.1.329"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
